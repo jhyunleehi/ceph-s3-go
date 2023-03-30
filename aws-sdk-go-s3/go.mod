@@ -1,4 +1,4 @@
-module ceph-s3/aws-sdk-go-s3
+module aws-sdk-go-s3
 
 go 1.19
 

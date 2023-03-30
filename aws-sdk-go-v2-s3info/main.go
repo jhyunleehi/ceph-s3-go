@@ -1,7 +1,7 @@
 package main
 
 import (
-	"ceph-s3/aws-sdk-go-v2-s3info/s3info"
+	"aws-sdk-go-v2-s3info/s3info"
 
 	log "github.com/sirupsen/logrus"
 )

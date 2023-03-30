@@ -59,6 +59,12 @@ func TestListBuckets(t *testing.T) {
 }
 ```
 
+* 실행
+
+```log
+C:\Gocode\src\ceph-s3-go\aws-sdk-go-s3>go run -mod vendor main.go
+```
+
 ## AWS SDK GO V2 S3 모듈
 
 * github.com/aws/aws-sdk-go-v2/service/s3  
@@ -117,6 +123,10 @@ func main() {
  }
 }
 
+```
+* 실행
+```log
+C:\Gocode\src\ceph-s3-go\aws-sdk-go-v2>go run -mod vendor main.go
 ```
 
 ## go ceph admin
@@ -197,3 +207,9 @@ func main() {
 
 }
 ````
+
+* 실행방법
+
+```log
+C:\Gocode\src\ceph-s3-go\go-ceph-admin>go run -mod vendor main.go
+```

@@ -1,4 +1,4 @@
-module s3/aws-sdk-go-v2
+module aws-sdk-go-v2
 
 go 1.19
 
