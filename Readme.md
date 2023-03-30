@@ -1,6 +1,6 @@
 # Ceph RGW Storage S3 API
 
-## AWS SDK GO S3 모듈
+### AWS SDK GO S3 모듈
 
 * 기존 `github.com/aws/aws-sdk-go/aws` 라이브러리를 이용
 * Ceph 스토리지 사용을 위해서는 스토리지에서 제공하는 EndpointUrl 설정이 필요함  
@@ -65,7 +65,7 @@ func TestListBuckets(t *testing.T) {
 C:\Gocode\src\ceph-s3-go\aws-sdk-go-s3>go run -mod vendor main.go
 ```
 
-## AWS SDK GO V2 S3 모듈
+### AWS SDK GO V2 S3 모듈
 
 * github.com/aws/aws-sdk-go-v2/service/s3  
 * Ceph 스토리지 사용을 위해서는 스토리지에서 제공하는 EndpointUrl 설정이 필요함  
@@ -129,7 +129,98 @@ func main() {
 C:\Gocode\src\ceph-s3-go\aws-sdk-go-v2>go run -mod vendor main.go
 ```
 
-## go ceph admin
+### go ceph s3 info
+
+
+```go
+package main
+
+import (
+	"aws-sdk-go-v2-s3info/s3info"
+
+	log "github.com/sirupsen/logrus"
+)
+
+func main() {
+	AwsAccessKey := "XMH5L0E9LMAX44PAR66G"
+	AwsSecretKey := "rCKebrRAwKAjanRiwzJEM2oJkmPzOXjmLEj9RaiG"
+	EndPointUrl := "http://192.168.57.11"
+
+	s3info, err := s3info.NewS3Info(AwsAccessKey, AwsSecretKey, EndPointUrl)
+	if err != nil {
+		log.Error(err)
+	}
+	s3info.SetConfigByKeyEndpoint()
+	s3info.GetBucketList()
+	s3info.CreateBucket("newbucket1","")
+		
+	s3info.BucketName = "mybucket"
+	s3info.GetItems("")
+	
+}
+
+```
+* S3info 
+``` go 
+type S3Info struct {
+	AwsS3Region    string
+	AwsAccessKey   string
+	AwsSecretKey   string
+	AwsProfileName string
+	BucketName     string
+	EndPoint       string //http://192.168.57.11:80  aws.String() aws.Endpoint
+	S3Client       *s3.Client
+}
+
+func NewS3Info(accesskey, securekey, endpointurl string) (*S3Info, error) {
+	s3info := S3Info{
+		AwsS3Region:  "local",
+		AwsAccessKey: accesskey,
+		AwsSecretKey: securekey,
+		EndPoint:     endpointurl,
+	}
+	return &s3info, nil
+}
+
+// key를 활용해서 Client 생성
+func (s *S3Info) SetConfigByKeyEndpoint() error {
+	credentials := credentials.NewStaticCredentialsProvider(s.AwsAccessKey, s.AwsSecretKey, "")
+	conf, err := config.LoadDefaultConfig(
+		context.TODO(),
+		config.WithCredentialsProvider(credentials),
+		config.WithRegion("local"),
+	)
+	if err != nil {
+		log.Error(err)
+		return err
+	}
+
+	// Create a new S3 SDK client instance.
+	s3Client := s3.NewFromConfig(
+		conf,
+		s3.WithEndpointResolver(
+			s3.EndpointResolverFromURL(s.EndPoint),
+		),
+		func(opts *s3.Options) {
+			opts.UsePathStyle = true
+		},
+	)
+
+	if err != nil {
+		log.Printf("error: %v", err)
+		//panic(err)
+		return errors.New(err.Error())
+	}
+	s.S3Client = s3Client
+	return nil
+}
+```
+
+
+
+
+
+### go ceph admin
 
 * github.com/ceph/go-ceph/rgw/admin
 * admin portal, rdb, fs 등 다양한 접근 방법 제공
