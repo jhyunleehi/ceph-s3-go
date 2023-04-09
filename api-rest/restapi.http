@@ -1,0 +1,344 @@
+@targetUrl=192.168.57.11:8443
+@username=admin
+@password=1234qwer
+
+
+###
+# @name login
+POST https://{{targetUrl}}/api/auth
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+{
+  "username":"{{username}}",
+  "password":"{{password}}"
+}
+
+
+###
+GET https://{{targetUrl}}/api/osd
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+###
+GET https://{{targetUrl}}/api/summary
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+###
+GET https://{{targetUrl}}/api/health/full
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+###
+GET https://{{targetUrl}}/api/pool
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+###
+GET https://{{targetUrl}}/api/pool/kr-west1.rgw.archive.data
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+###
+GET https://{{targetUrl}}/api/pool/kr-west1.rgw.archive.data/configuration
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+###
+GET https://{{targetUrl}}/api/pool/.mgr
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+###
+GET https://{{targetUrl}}/api/pool/.mgr/configuration
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+
+###
+POST https://{{targetUrl}}/api/pool
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+{
+  "pool": "pool-3",
+  "pg_num": 0,
+  "pool_type": "erasure",
+  "erasure_code_profile": null,
+  "flags": null,
+  "application_metadata": ["rgw"],
+  "rule_name": null,
+  "configuration": null
+}
+
+
+
+###
+GET https://{{targetUrl}}/api/user
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+###
+GET https://{{targetUrl}}/api/user/admin
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+###
+GET https://{{targetUrl}}/api/rgw/status
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+###
+#ceph version, realm_name, zonegroup_name, zone_name
+GET https://{{targetUrl}}/api/rgw/daemon
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+###
+GET https://{{targetUrl}}/api/rgw/site?query=&daemon_name=archive.lkk-ceph-01.bysolo
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+
+
+###
+GET https://{{targetUrl}}/api/rgw/user
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+###
+POST https://{{targetUrl}}/api/rgw/user
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+{
+  "uid": "user-3",
+  "display_name": "user-3.fullname",
+  "email": null,
+  "max_buckets": null,
+  "suspended": null,
+  "generate_key": null,
+  "access_key": null,
+  "secret_key": null,
+  "daemon_name": null
+}
+
+###
+GET https://{{targetUrl}}/api/rgw/user/user-2
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+###
+GET https://{{targetUrl}}/api/rgw/user/user-3
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+###
+GET https://{{targetUrl}}/api/rgw/user/user-3/quota
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+###
+PUT https://{{targetUrl}}/api/rgw/user/user-3/quota
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+{
+  "quota_type": "user",
+  "enabled": "true",
+  "max_size_kb": 10240,
+  "max_objects": "1000",
+  "daemon_name": null
+}
+
+###
+PUT https://{{targetUrl}}/api/rgw/user/user-3/quota
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+{
+  "quota_type": "bucket",
+  "enabled": "true",
+  "max_size_kb": 20480,
+  "max_objects": "2000",
+  "daemon_name": null
+}
+
+###
+DELETE  https://{{targetUrl}}/api/rgw/user/user-3
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+
+###
+GET https://{{targetUrl}}/api/rgw/bucket
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+
+###
+POST https://{{targetUrl}}/api/rgw/bucket
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+{
+  "bucket": "bucket-2",
+  "uid": "user-2",
+  "zonegroup": null,
+  "placement_target": "archive-placement",
+  "lock_enabled": "false",
+  "lock_mode": null,
+  "lock_retention_period_days": null,
+  "lock_retention_period_years": null,
+  "daemon_name": null
+}
+
+###
+GET https://{{targetUrl}}/api/rgw/bucket/bucket-1
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+###
+PUT https://{{targetUrl}}/api/rgw/bucket/bucket-11
+Host: example.com
+Content-Type: application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+{
+    "bucket_id": "8f61e53a-404b-4a23-9f21-eb13f915ebd6.14490.2",
+    "daemon_name": "",
+    "encryption_state": "",
+    "encryption_type": "",
+    "key_id": "",
+    "lock_mode": "compliance",
+    "lock_retention_period_days": null,
+    "lock_retention_period_years": null,
+    "mfa_delete": "Disabled",
+    "mfa_token_pin": "",
+    "mfa_token_serial": "",
+    "uid": "user-1",
+    "versioning_state": "Enabled"
+}
+
+
+
+###
+#service type(rgw ..), service_name(rgw.archive)
+#rgw_realm, rgw_zone
+#service(rgw ..) created date
+GET https://{{targetUrl}}/api/service
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+###
+GET https://{{targetUrl}}/api/settings
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+
+
+
+###
+GET https://{{targetUrl}}/api/role
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+
+###
+GET https://{{targetUrl}}/api/crush_rule
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v2.0+json
+
+###
+GET https://{{targetUrl}}/api/crush_rule/erasure-code
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v2.0+json
+
+
+###
+GET https://{{targetUrl}}/api/erasure_code_profile
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+
+###
+GET https://{{targetUrl}}/api/cluster
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v0.1+json
+
+
+###
+#Cluster Capcity(Used/Avail bytes)
+GET https://{{targetUrl}}/api/health/minimal
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+###
+GET https://{{targetUrl}}/api/logs/all
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+###
+GET https://{{targetUrl}}/api/monitor
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+###
+GET https://{{targetUrl}}/api/perf_counters
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+###
+GET https://{{targetUrl}}/api/prometheus
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+###
+GET https://{{targetUrl}}/api/rgw/zonegroup
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+
+###
+GET https://{{targetUrl}}/api/orchestrator/status
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+###
+#Cluster ceph version, service type(rgw ..)
+GET https://{{targetUrl}}/api/host
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+###
+GET https://{{targetUrl}}/api/host/lkk-ceph-01
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+###
+#rgw daemon info
+GET https://{{targetUrl}}/api/host/lkk-ceph-01/daemons
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+###
+GET https://{{targetUrl}}/api/host/lkk-ceph-01/devices
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+###
+#disk devices(/dev/sdb, /dev/sdc) info
+GET https://{{targetUrl}}/api/host/lkk-ceph-01/inventory
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+###
+GET https://{{targetUrl}}/api/host/lkk-ceph-01/smart
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
+
+###
+GET https://{{targetUrl}}/api/mgr/module
+Content-Type:application/json
+Accept: application/vnd.ceph.api.v1.0+json
